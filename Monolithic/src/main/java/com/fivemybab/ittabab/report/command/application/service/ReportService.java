@@ -12,7 +12,7 @@ import com.fivemybab.ittabab.report.command.application.dto.CreateReportRequest;
 
 import com.fivemybab.ittabab.report.command.domain.aggregate.Report;
 import com.fivemybab.ittabab.report.command.domain.repository.ReportRepository;
-import com.fivemybab.ittabab.store.command.application.repository.StoreReviewRepository;
+import com.fivemybab.ittabab.store.command.domain.repository.StoreReviewRepository;
 import com.fivemybab.ittabab.store.command.domain.aggregate.StoreReview;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

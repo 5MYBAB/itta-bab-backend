@@ -2,7 +2,7 @@ package com.fivemybab.ittabab.store.command.application.service;
 
 import com.fivemybab.ittabab.exception.NotFoundException;
 import com.fivemybab.ittabab.store.command.application.dto.CreateStoreFavoriteDto;
-import com.fivemybab.ittabab.store.command.application.repository.StoreFavoriteRepository;
+import com.fivemybab.ittabab.store.command.domain.repository.StoreFavoriteRepository;
 import com.fivemybab.ittabab.store.command.domain.aggregate.StoreFavorite;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
