@@ -1,14 +1,10 @@
 package com.fivemybab.ittabab.store.command.application.service;
 
 import com.fivemybab.ittabab.exception.NotFoundException;
-import com.fivemybab.ittabab.store.command.application.dto.CreateStoreFavoriteDto;
 import com.fivemybab.ittabab.store.command.application.dto.CreateStoreMenuCategoryDto;
 import com.fivemybab.ittabab.store.command.application.dto.UpdateStoreMenuCategoryDto;
-import com.fivemybab.ittabab.store.command.application.dto.UpdateStoreMenuDto;
-import com.fivemybab.ittabab.store.command.application.repository.StoreMenuCategoryRepository;
-import com.fivemybab.ittabab.store.command.application.repository.StoreMenuRepository;
-import com.fivemybab.ittabab.store.command.domain.aggregate.StoreFavorite;
-import com.fivemybab.ittabab.store.command.domain.aggregate.StoreMenu;
+import com.fivemybab.ittabab.store.command.domain.repository.StoreMenuCategoryRepository;
+import com.fivemybab.ittabab.store.command.domain.repository.StoreMenuRepository;
 import com.fivemybab.ittabab.store.command.domain.aggregate.StoreMenuCategory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

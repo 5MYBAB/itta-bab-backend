@@ -2,17 +2,14 @@ package com.fivemybab.ittabab.store.command.application.service;
 
 import com.fivemybab.ittabab.exception.NotFoundException;
 import com.fivemybab.ittabab.store.command.application.dto.CreateStoreReviewDto;
-import com.fivemybab.ittabab.store.command.application.dto.StoreMenuInfoDto;
 import com.fivemybab.ittabab.store.command.application.dto.UpdateStoreReviewDto;
-import com.fivemybab.ittabab.store.command.application.repository.StoreRepository;
-import com.fivemybab.ittabab.store.command.application.repository.StoreReviewRepository;
+import com.fivemybab.ittabab.store.command.domain.repository.StoreRepository;
+import com.fivemybab.ittabab.store.command.domain.repository.StoreReviewRepository;
 import com.fivemybab.ittabab.store.command.domain.aggregate.StoreReview;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

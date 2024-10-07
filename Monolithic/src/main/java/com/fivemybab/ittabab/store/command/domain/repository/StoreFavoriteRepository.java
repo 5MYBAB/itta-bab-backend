@@ -1,4 +1,4 @@
-package com.fivemybab.ittabab.store.command.application.repository;
+package com.fivemybab.ittabab.store.command.domain.repository;
 
 import com.fivemybab.ittabab.store.command.domain.aggregate.StoreFavorite;
 import org.springframework.data.jpa.repository.JpaRepository;
