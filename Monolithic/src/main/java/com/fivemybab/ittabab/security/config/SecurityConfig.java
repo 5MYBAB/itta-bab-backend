@@ -113,6 +113,7 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:5173"); // 허용할 도메인
         config.addAllowedHeader("*"); // 모든 헤더 허용
         config.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
+        config.addExposedHeader("token");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
