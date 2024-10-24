@@ -60,4 +60,24 @@
         WHERE login_id = #{loginId}
     </select>
 
+    <resultMap id="MyPageInfoResultMap" type="com.fivemybab.ittabab.user.query.dto.MyPageResponse">
+        <result property="username" column="username"/>
+        <result property="phone" column="phone"/>
+        <result property="className" column="class_name"/>
+        <result property="seasonNum" column="season_num"/>
+    </resultMap>
+
+    <select id="findMyPageInfoById"
+            parameterType="long"
+            resultMap="MyPageInfoResultMap">
+        SELECT
+               a.username
+             , a.phone
+             , b.class_name
+             , b.season_num
+          FROM user_info a
+          JOIN course b USING (course_id)
+         WHERE user_id = #{id}
+    </select>
+
 </mapper>
