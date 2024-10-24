@@ -2,6 +2,7 @@ package com.fivemybab.ittabab.user.query.mapper;
 
 import com.fivemybab.ittabab.user.command.application.dto.UserDto;
 import com.fivemybab.ittabab.user.command.domain.aggregate.UserInfo;
+import com.fivemybab.ittabab.user.query.dto.MyPageResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,6 @@ public interface UserMapper {
     List<UserDto> findAll();
 
     Optional<UserInfo> findByLoginId(String loginId);
+
+    MyPageResponse findMyPageInfoById(Long id);
 }
