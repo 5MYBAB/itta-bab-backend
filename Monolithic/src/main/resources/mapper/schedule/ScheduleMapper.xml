@@ -5,11 +5,9 @@
 <mapper namespace="com.fivemybab.ittabab.schedule.query.mapper.ScheduleMapper">
 
     <resultMap id="ScheduleDtoResultMap" type="com.fivemybab.ittabab.schedule.command.application.dto.ScheduleDto">
-        <result property="scheduleId" column="schedule_id" />
         <result property="scheduleDate" column="schedule_date" />
         <result property="scheduleTitle" column="schedule_title" />
         <result property="scheduleContent" column="schedule_content" />
-        <result property="userId" column="user_id" />
     </resultMap>
 
     <select id="scheduleList" resultMap="ScheduleDtoResultMap">
