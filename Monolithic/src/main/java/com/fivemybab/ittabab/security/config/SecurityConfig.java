@@ -8,7 +8,6 @@ import com.fivemybab.ittabab.security.handler.LoginFailureHandler;
 import com.fivemybab.ittabab.security.handler.LoginSuccessHandler;
 import com.fivemybab.ittabab.security.util.CustomUserDetailsService;
 import com.fivemybab.ittabab.security.util.JwtUtil;
-import com.fivemybab.ittabab.user.query.mapper.UserMapper;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +34,6 @@ public class SecurityConfig {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
-    private final UserMapper userMapper;
     private final Environment env;
     private final JwtUtil jwtUtil;
 

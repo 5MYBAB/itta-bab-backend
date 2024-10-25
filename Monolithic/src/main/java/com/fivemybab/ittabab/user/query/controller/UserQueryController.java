@@ -40,6 +40,20 @@ public class UserQueryController {
         }
     }
 
+    @Operation(summary = "아이디 찾기")
+    @GetMapping("/find-id")
+    public ResponseEntity<String> findIdByNameAndPhone(@RequestParam String username, @RequestParam String phone) {
+
+        String loginId = userQueryService.findIdByNameAndPhone(username, phone);
+
+        if (loginId != null && !loginId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(loginId);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+
+
     /* 특정 회원 조회 */
     @Operation(summary = "특정 회원 조회")
     @GetMapping("/admin/{id}")
