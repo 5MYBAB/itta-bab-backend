@@ -1,6 +1,7 @@
 package com.fivemybab.ittabab.user.query.controller;
 
 import com.fivemybab.ittabab.security.util.CustomUserDetails;
+import com.fivemybab.ittabab.user.query.dto.FriendResponse;
 import com.fivemybab.ittabab.user.query.service.FriendQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,11 +26,11 @@ public class FriendQueryController {
     /* 친구 요청 조회 */
     @Operation(summary = "친구 요청 조회")
     @GetMapping("/request")
-    public ResponseEntity<List<Long>> getFriendRequests(@AuthenticationPrincipal CustomUserDetails loginUser) {
+    public ResponseEntity<List<FriendResponse>> getFriendRequests(@AuthenticationPrincipal CustomUserDetails loginUser) {
 
         Long userId = loginUser.getUserId();   // 현재 로그인된 계정의 userId
 
-        List<Long> friendRequests = friendQueryService.findFriendRequests(userId);
+        List<FriendResponse> friendRequests = friendQueryService.findFriendRequests(userId);
 
         return new ResponseEntity<>(friendRequests, HttpStatus.OK);
     }
@@ -37,11 +38,11 @@ public class FriendQueryController {
     /* 친구 목록 조회 */
     @Operation(summary = "친구 목록 조회")
     @GetMapping("/list")
-    public ResponseEntity<List<Long>> getFriendList(@AuthenticationPrincipal CustomUserDetails loginUser) {
+    public ResponseEntity<List<FriendResponse>> getFriendList(@AuthenticationPrincipal CustomUserDetails loginUser) {
 
         Long userId = loginUser.getUserId();   // 현재 로그인된 계정의 userId
 
-        List<Long> friendRequests = friendQueryService.findFriendList(userId);
+        List<FriendResponse> friendRequests = friendQueryService.findFriendList(userId);
 
         return new ResponseEntity<>(friendRequests, HttpStatus.OK);
     }

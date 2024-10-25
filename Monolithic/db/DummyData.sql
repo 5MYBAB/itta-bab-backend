@@ -103,13 +103,11 @@ VALUES
     (4, 4, 4),
     (5, 5, 5);
 
-# Creating a complete script starting from the "Post" section, ensuring it's consolidated into a single insert block.
-post_and_beyond_script = """
 -- Post
 INSERT INTO post (user_id, post_title, post_content, create_date, is_blinded)
 VALUES (1, 'Welcome to Pizza Lovers', 'We love pizza!', '2024-08-15 12:00:00', FALSE),
-       (2, 'Burger Fans Unite', 'Let\'s discuss burgers!', '2024-08-16 13:00:00', FALSE),
-       (3, 'Morning Coffee Thoughts', 'Can\'t start the day without coffee.', '2024-08-17 14:00:00', FALSE),
+       (2, 'Burger Fans Unite', 'Lets discuss burgers!', '2024-08-16 13:00:00', FALSE),
+       (3, 'Morning Coffee Thoughts', 'Cant start the day without coffee.', '2024-08-17 14:00:00', FALSE),
        (4, 'Sushi Paradise', 'Best places to get sushi?', '2024-08-18 15:00:00', FALSE),
        (5, 'Steakhouse Recommendations', 'Where to get the best steak?', '2024-08-19 16:00:00', FALSE),
        (6, 'Pasta Lovers', 'Share your favorite pasta dishes!', '2024-08-20 17:00:00', FALSE);
@@ -117,7 +115,7 @@ VALUES (1, 'Welcome to Pizza Lovers', 'We love pizza!', '2024-08-15 12:00:00', F
 -- Post Comment
 INSERT INTO post_comment (post_id, user_id, comment_content, create_date, is_blinded)
 VALUES (1, 2, 'I love this place!', '2024-08-15 12:30:00', FALSE),
-       (1, 3, 'Can\'t wait to try it!', '2024-08-15 12:45:00', FALSE),
+       (1, 3, 'Cant wait to try it!', '2024-08-15 12:45:00', FALSE),
        (2, 1, 'Burgers are life.', '2024-08-16 13:30:00', FALSE),
        (3, 4, 'Coffee is a must!', '2024-08-17 14:30:00', FALSE),
        (4, 5, 'SushiWorld is the best!', '2024-08-18 15:30:00', FALSE),
@@ -126,7 +124,7 @@ VALUES (1, 2, 'I love this place!', '2024-08-15 12:30:00', FALSE),
 -- Schedule Info
 INSERT INTO schedule_info (schedule_date, schedule_title, schedule_content, user_id)
 VALUES ('2024-08-20', 'Pizza Party', 'Join us for a pizza party!', 1),
-       ('2024-09-01', 'Burger Bash', 'Let\'s have a burger feast!', 2),
+       ('2024-09-01', 'Burger Bash', 'Lets have a burger feast!', 2),
        ('2024-09-10', 'Coffee Meetup', 'Discuss coffee brewing techniques.', 3),
        ('2024-09-15', 'Sushi Night', 'Enjoy sushi with friends.', 4),
        ('2024-09-20', 'Steak Tasting', 'Sample different cuts of steak.', 5),
@@ -149,7 +147,7 @@ VALUES (1, 1, 'Join the Pizza Lovers', 10, TRUE, '2024-08-01 10:00:00', '2024-09
        (3, 3, 'Coffee Enthusiasts', 15, TRUE, '2024-08-10 12:00:00', '2024-09-10 20:00:00', 'Coffee is life.', FALSE),
        (4, 4, 'Sushi Nights', 12, TRUE, '2024-08-15 13:00:00', '2024-09-15 21:00:00', 'Sushi for everyone!', FALSE),
        (5, 5, 'Steak Lovers', 20, TRUE, '2024-08-20 14:00:00', '2024-09-20 22:00:00', 'All about steak!', FALSE),
-       (6, 6, 'Pasta Workshops', 18, TRUE, '2024-08-25 15:00:00', '2024-09-25 23:00:00', 'Let\'s cook pasta!', FALSE);
+       (6, 6, 'Pasta Workshops', 18, TRUE, '2024-08-25 15:00:00', '2024-09-25 23:00:00', 'Lets cook pasta!', FALSE);
 
 -- Group Comment
 INSERT INTO group_comment (group_id, user_id, comment_content, create_date, is_blinded)

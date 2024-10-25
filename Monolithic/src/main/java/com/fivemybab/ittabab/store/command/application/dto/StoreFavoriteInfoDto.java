@@ -14,5 +14,6 @@ public class StoreFavoriteInfoDto {
     private Long favoriteId;
     private Long userId;
     private Long storeId;
+    private String storeName;
 
 }

@@ -1,5 +1,6 @@
 package com.fivemybab.ittabab.user.query.service;
 
+import com.fivemybab.ittabab.user.query.dto.FriendResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ class FriendQueryServiceTest {
     @ValueSource(longs = {3L})
     void testFindCourseByBC(Long userId) {
 
-        List<Long> friendRequests = friendQueryService.findFriendRequests(userId);
+        List<FriendResponse> friendRequests = friendQueryService.findFriendRequests(userId);
 
         System.out.println(friendRequests);
 
@@ -34,7 +35,7 @@ class FriendQueryServiceTest {
     @ValueSource(longs = {2L})
     void testCourseList(Long userId) {
 
-        List<Long> friendList = friendQueryService.findFriendList(userId);
+        List<FriendResponse> friendList = friendQueryService.findFriendList(userId);
 
         System.out.println(friendList);
 

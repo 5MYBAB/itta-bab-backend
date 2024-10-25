@@ -27,4 +27,14 @@ public class ReportQueryService {
 
     }
 
+    public List<ReportDto> findMyReportList(Long userId) throws NotFoundException {
+
+        List<ReportDto> reportList = reportMapper.userReportList(userId);
+        if (reportList.isEmpty()) {
+            throw new NotFoundException("들어온 신고 없음");
+        }
+
+        return reportList;
+
+    }
 }

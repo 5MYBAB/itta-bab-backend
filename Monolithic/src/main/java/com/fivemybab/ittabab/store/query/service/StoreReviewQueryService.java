@@ -1,6 +1,7 @@
 package com.fivemybab.ittabab.store.query.service;
 
 import com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto;
+import com.fivemybab.ittabab.store.query.dto.MyReviewResponse;
 import com.fivemybab.ittabab.store.query.mapper.StoreReviewMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,7 @@ public class StoreReviewQueryService {
         return storeReviewMapper.findStoreReviewById(id);
     }
 
+    public List<MyReviewResponse> findMyReviewList(Long userId) {
+        return storeReviewMapper.findMyReviewList(userId);
+    }
 }

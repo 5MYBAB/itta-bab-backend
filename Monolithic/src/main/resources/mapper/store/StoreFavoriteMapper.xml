@@ -6,17 +6,19 @@
     <select
             id="findStoreFavoriteList"
             resultType="com.fivemybab.ittabab.store.command.application.dto.StoreFavoriteInfoDto">
-        SELECT *
-        FROM favorite
-        WHERE user_id = #{userId}
+        SELECT a.favorite_id, a.user_id, a.store_id, b.store_name
+        FROM favorite a
+        JOIN store b USING (store_id)
+        WHERE a.user_id = #{userId}
     </select>
 
     <select
             id="findStoreFavoriteByStoreIdAndUserId"
             resultType="com.fivemybab.ittabab.store.command.application.dto.StoreFavoriteInfoDto">
-        SELECT *
-        FROM favorite
-        WHERE store_id = #{storeId}
-        AND user_id = #{userId}
+        SELECT a.favorite_id, a.user_id, a.store_id, b.store_name
+        FROM favorite a
+        JOIN store b USING (store_id)
+        WHERE a.store_id = #{storeId}
+        AND a.user_id = #{userId}
     </select>
 </mapper>

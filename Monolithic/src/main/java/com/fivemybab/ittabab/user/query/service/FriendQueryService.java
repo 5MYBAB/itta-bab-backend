@@ -1,6 +1,8 @@
 package com.fivemybab.ittabab.user.query.service;
 
 import com.fivemybab.ittabab.user.command.domain.aggregate.FriendStatus;
+import com.fivemybab.ittabab.user.command.domain.aggregate.UserInfo;
+import com.fivemybab.ittabab.user.query.dto.FriendResponse;
 import com.fivemybab.ittabab.user.query.mapper.FriendMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,15 +16,15 @@ public class FriendQueryService {
 
     private final FriendMapper friendMapper;
 
-    public List<Long> findFriendRequests(Long id) {
+    public List<FriendResponse> findFriendRequests(Long id) {
 
         return friendMapper.findFriendList(id, FriendStatus.PENDING);
     }
 
-    public List<Long> findFriendList(Long id) {
+    public List<FriendResponse> findFriendList(Long id) {
 
-        List<Long> friendList1 = friendMapper.findFriendList(id, FriendStatus.ACCEPTED);
-        List<Long> friendList2 = friendMapper.findFriendListReverse(id, FriendStatus.ACCEPTED);
+        List<FriendResponse> friendList1 = friendMapper.findFriendList(id, FriendStatus.ACCEPTED);
+        List<FriendResponse> friendList2 = friendMapper.findFriendListReverse(id, FriendStatus.ACCEPTED);
 
         /* 두 리스트가 모두 비어 있으면 예외 발생   */
         if ((friendList1 == null || friendList1.isEmpty()) &&
@@ -31,7 +33,7 @@ public class FriendQueryService {
         }
 
         /* 두 리스트를 합침 */
-        List<Long> friendList = new ArrayList<>();
+        List<FriendResponse> friendList = new ArrayList<>();
         if (friendList1 != null) {
             friendList.addAll(friendList1);
         }

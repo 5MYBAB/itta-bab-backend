@@ -55,7 +55,7 @@ public class SecurityConfig {
                         // HttpMethod(All) - USER
                         .requestMatchers("/post/**", "/postComment/**","/good/**","/groupComment/**","/group/**"
                         ,"/inquiry/user","/picture/**","/report/user/**","/schedule/**","/friend/**","/notification/**"
-                        ,"/user/**").hasAnyRole("USER")
+                        ,"/user/**", "/store/review/user").hasAnyRole("USER")
 
                         // HttpMethod(All) - ADMIN
                         .requestMatchers("/inquiry/admin/**","/report/admin/**","/bootcamp/**","/course/**","/user/admin/**","/store/admin/**",

@@ -1,5 +1,6 @@
 package com.fivemybab.ittabab.board.query.service;
 
+import com.fivemybab.ittabab.board.query.dto.MyPostResponse;
 import com.fivemybab.ittabab.board.query.dto.PostCommentResponse;
 import com.fivemybab.ittabab.board.query.dto.PostQueryDto;
 import com.fivemybab.ittabab.board.query.mapper.PostQueryMapper;
@@ -62,6 +63,18 @@ public class PostQueryService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
+    public List<MyPostResponse> findMyPostList(Long userId) throws NotFoundException {
+
+        List<MyPostResponse> posts = postQueryMapper.findMyPostList(userId);
+
+        if (posts.isEmpty()) {
+            throw new NotFoundException("게시글이 없습니다.");
+        }
+
+        return posts;
+    }
+    
     @Transactional(readOnly = true)
     public PostQueryDto findPostsByPostId(Long postId) throws NotFoundException {
         PostQueryDto postDetail = postQueryMapper.selectPostByPostId(postId);

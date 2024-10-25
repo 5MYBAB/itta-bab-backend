@@ -26,8 +26,6 @@ public class InquiryQueryController {
     @GetMapping("/admin")
     public ResponseEntity<List<InquiryDto>> findInquiryList() throws NotFoundException {
         List<InquiryDto> inquiryList = inquiryQueryService.findInquiryList();
-        System.out.println("왔다감");
-        System.out.println(inquiryList.get(0));
         return new ResponseEntity<>(inquiryList, HttpStatus.OK);
     }
 
@@ -41,7 +39,7 @@ public class InquiryQueryController {
 
     /* 문의 조회 (사용자)*/
     @Operation(summary = "문의 조회(사용자)")
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user")
     public ResponseEntity<List<InquiryDto>> findInquiryListByUserId(@AuthenticationPrincipal CustomUserDetails loginUser) throws NotFoundException {
         List<InquiryDto> inquiryId = inquiryQueryService.findInquiryListByUserId(loginUser.getUserId());
         return new ResponseEntity<>(inquiryId,HttpStatus.OK);
