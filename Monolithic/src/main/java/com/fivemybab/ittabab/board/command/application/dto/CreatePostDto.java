@@ -16,5 +16,4 @@ public class CreatePostDto {
     private String postContent;
     private LocalDateTime createDate;
 
-
 }
