@@ -45,17 +45,10 @@
         FROM user_info
     </select>
 
-    <select id="findUserIdByLoginId"
-            resultType="long">
-        SELECT user_id
-        FROM user_info
-        WHERE login_id = #{loginUserLoginId}
-    </select>
-
     <select id="findByLoginId"
             parameterType="String"
-            resultMap="UserInfoResultMap">
-        SELECT *
+            resultType="string">
+        SELECT username
         FROM user_info
         WHERE login_id = #{loginId}
     </select>

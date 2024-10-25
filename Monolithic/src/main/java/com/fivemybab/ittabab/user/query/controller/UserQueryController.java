@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +28,16 @@ public class UserQueryController {
         Long userId = loginUser.getUserId();
         MyPageResponse myPageResponse = userQueryService.findMyPageInfoById(userId);
         return new ResponseEntity<>(myPageResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "아이디 중복 확인")
+    @GetMapping("/id")
+    public ResponseEntity<UserDto> checkDuplicateLoginId(@RequestParam String id) {
+        if (!userQueryService.checkDuplicateLoginId(id)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     /* 특정 회원 조회 */
