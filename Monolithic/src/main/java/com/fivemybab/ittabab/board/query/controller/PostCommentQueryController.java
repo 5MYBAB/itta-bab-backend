@@ -2,6 +2,7 @@ package com.fivemybab.ittabab.board.query.controller;
 
 import com.fivemybab.ittabab.board.query.dto.MyCommentResponse;
 import com.fivemybab.ittabab.security.util.CustomUserDetails;
+import com.fivemybab.ittabab.board.query.dto.PostCommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.fivemybab.ittabab.board.query.dto.PostCommentQueryDto;
@@ -11,6 +12,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,4 +43,13 @@ public class PostCommentQueryController {
         List<MyCommentResponse> posts = postCommentQueryService.findMyCommentList(userId);
         return ResponseEntity.ok(posts);
     }
+  
+    /* 댓글 리스트 */
+    @Operation(summary = "해당 게시물 댓글")
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<PostCommentResponse>> getCommentByPostId(@PathVariable Long postId) throws NotFoundException {
+        List<PostCommentResponse> posts = postCommentQueryService.findCommentByPostId(postId);
+        return ResponseEntity.ok(posts);
+    }
+
 }

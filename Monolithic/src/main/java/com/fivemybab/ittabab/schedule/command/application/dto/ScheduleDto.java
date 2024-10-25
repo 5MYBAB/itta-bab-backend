@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Setter
 @ToString
 public class ScheduleDto {
+    private Long scheduleId;
     private LocalDate scheduleDate;
     private String scheduleTitle;
     private String scheduleContent;

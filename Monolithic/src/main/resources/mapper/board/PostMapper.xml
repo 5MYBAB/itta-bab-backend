@@ -71,6 +71,12 @@
         FROM post
         WHERE user_id = #{userId}
         ORDER BY create_date DESC
+      
+    <!-- 게사글 상세 조회-->
+    <select id="selectPostByPostId" resultMap="PostQueryResultMap">
+        SELECT *
+        FROM post
+            where post_id = #{postId};
     </select>
 
 </mapper>

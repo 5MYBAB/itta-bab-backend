@@ -19,4 +19,7 @@ public interface PostQueryMapper {
     List<PostQueryDto> selectPostsByLikesAsc(Long courseId);
 
     List<MyPostResponse> findMyPostList(Long userId);
+  
+    PostQueryDto selectPostByPostId(Long postId);
+
 }

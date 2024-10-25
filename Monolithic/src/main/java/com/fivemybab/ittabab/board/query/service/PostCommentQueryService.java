@@ -2,6 +2,7 @@ package com.fivemybab.ittabab.board.query.service;
 
 import com.fivemybab.ittabab.board.query.dto.MyCommentResponse;
 import com.fivemybab.ittabab.board.query.dto.PostCommentQueryDto;
+import com.fivemybab.ittabab.board.query.dto.PostCommentResponse;
 import com.fivemybab.ittabab.board.query.mapper.PostCommentQueryMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
@@ -37,5 +38,16 @@ public class PostCommentQueryService {
         }
 
         return comments;
+    }
+  
+    /* 해당 게시물 별 댓글 리스트 */
+    @Transactional(readOnly = true)
+    public List<PostCommentResponse> findCommentByPostId(Long postId) throws NotFoundException {
+        List<PostCommentResponse> commentResponses = postCommentQueryMapper.selectCommentByPostId(postId);
+
+        if (commentResponses.isEmpty()) {
+            throw new NotFoundException("댓글이 없습니다.");
+        }
+        return commentResponses;
     }
 }

@@ -2,6 +2,7 @@ package com.fivemybab.ittabab.board.query.mapper;
 
 import com.fivemybab.ittabab.board.query.dto.MyCommentResponse;
 import com.fivemybab.ittabab.board.query.dto.PostCommentQueryDto;
+import com.fivemybab.ittabab.board.query.dto.PostCommentResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface PostCommentQueryMapper {
     List<PostCommentQueryDto> selectPostsByCommentCount();
 
     List<MyCommentResponse> findMyCommentList(Long userId);
+
+    // 해당 게시물의 댓글 리스트
+    List<PostCommentResponse> selectCommentByPostId(Long postId);
 }
