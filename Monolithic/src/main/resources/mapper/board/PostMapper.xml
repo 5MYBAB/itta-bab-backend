@@ -56,4 +56,11 @@
         ORDER BY comment_count DESC
     </select>
 
+    <!-- 게사글 상세 조회-->
+    <select id="selectPostByPostId" resultMap="PostQueryResultMap">
+        SELECT *
+        FROM post
+            where post_id = #{postId};
+    </select>
+
 </mapper>

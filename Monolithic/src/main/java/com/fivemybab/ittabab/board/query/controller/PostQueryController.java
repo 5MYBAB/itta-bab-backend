@@ -41,7 +41,10 @@ public class PostQueryController {
         return postQueryService.findPostsByLikesAsc(loginUser);
     }
 
-
-
+    @Operation(summary = "게시글 상세 조회")
+    @GetMapping("/{postId}")
+    public PostQueryDto findPostsByPostId(@PathVariable Long postId,@AuthenticationPrincipal CustomUserDetails loginUser) throws NotFoundException {
+        return postQueryService.findPostsByPostId(postId);
+    }
 
 }

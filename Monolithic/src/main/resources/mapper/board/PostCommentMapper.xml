@@ -13,6 +13,18 @@
         <result property="createdAt" column="create_date"/>
     </resultMap>
 
+    <resultMap id="PostCommentListResultMap" type="com.fivemybab.ittabab.board.query.dto.PostCommentResponse">
+        <result property="postCommentId" column="post_comment_id"/>
+        <result property="postId" column="post_id"/>
+        <result property="parentCommentId" column="parent_comment_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="commentContent" column="comment_content"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="isBlinded" column="is_blinded"/>
+    </resultMap>
+
+
     <!-- 게시글을 댓글 많은 순으로 정렬 -->
     <select id="selectPostsByCommentCount" resultMap="PostCommentResultMap">
         SELECT p.post_id, p.post_title, p.post_content, u.username, p.create_date, COUNT(pc.post_comment_id) AS comment_count
@@ -21,5 +33,11 @@
                  LEFT JOIN post_comment pc ON pc.post_id = p.post_id
         GROUP BY p.post_id, p.post_title, p.post_content, u.username, p.create_date
         ORDER BY comment_count DESC
+    </select>
+    <!-- 게시물 별 댓글-->
+    <select id="selectCommentByPostId" resultMap="PostCommentListResultMap">
+        SELECT *
+        FROM post_comment
+            where post_id = #{postId};
     </select>
 </mapper>
