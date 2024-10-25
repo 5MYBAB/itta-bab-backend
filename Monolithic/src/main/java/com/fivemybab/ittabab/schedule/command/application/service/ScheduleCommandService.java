@@ -35,8 +35,8 @@ public class ScheduleCommandService {
 
     /* 일정 수정 */
     @Transactional
-    public void modifySchedule(ScheduleModifyRequest scheduleModifyRequest) {
-        ScheduleInfo foundSchedule = scheduleRepository.findById(scheduleModifyRequest.getScheduleId())
+    public void modifySchedule(Long scheduleId, ScheduleModifyRequest scheduleModifyRequest) {
+        ScheduleInfo foundSchedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new NotFoundException("일정을 찾을 수 없습니다."));
 
         foundSchedule.modifyScheduleContent(scheduleModifyRequest.getScheduleContent());
