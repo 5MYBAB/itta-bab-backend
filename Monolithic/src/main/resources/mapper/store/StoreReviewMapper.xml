@@ -4,7 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fivemybab.ittabab.store.query.mapper.StoreReviewMapper">
 
-    <resultMap id="StoreReviewByStoreIdMap" type="com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto">
+    <resultMap id="StoreReviewByStoreIdMap"
+               type="com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto">
         <result property="reviewId" column="review_id"/>
         <result property="storeId" column="store_id"/>
         <result property="userId" column="user_id"/>
@@ -34,19 +35,51 @@
     </select>
 
     <select
-        id="findStoreReviewList"
-        resultType="com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto">
+            id="findStoreReviewList"
+            resultType="com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto">
         SELECT *
         FROM review
         ORDER BY create_date DESC
     </select>
 
     <select
-        id="findStoreReviewById"
-        resultType="com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto">
+            id="findStoreReviewById"
+            resultType="com.fivemybab.ittabab.store.command.application.dto.StoreReviewInfoDto">
         SELECT *
         FROM review
         WHERE review_id = #{reviewId}
         ORDER BY create_date DESC
+    </select>
+
+    <resultMap id="MyReviewMap"
+               type="com.fivemybab.ittabab.store.query.dto.MyReviewResponse">
+        <result property="reviewId" column="review_id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="reviewContent" column="review_content"/>
+        <result property="rating" column="rating"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="isBlinded" column="is_blinded"/>
+        <result property="storeName" column="store_name"/>
+    </resultMap>
+
+    <select
+            id="findMyReviewList"
+            resultMap="MyReviewMap">
+        SELECT
+               a.review_id
+             , a.store_id
+             , a.user_id
+             , a.review_content
+             , a.rating
+             , a.create_date
+             , a.update_date
+             , a.is_blinded
+             , b.store_name
+        FROM review a
+        JOIN store b USING (store_id)
+        WHERE a.user_id = #{userId}
+        ORDER BY a.create_date DESC
     </select>
 </mapper>
