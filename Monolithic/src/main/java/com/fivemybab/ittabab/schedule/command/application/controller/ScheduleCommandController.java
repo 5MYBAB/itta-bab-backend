@@ -28,7 +28,6 @@ public class ScheduleCommandController {
     @PostMapping
     public ResponseEntity<String> registSchedule(@RequestBody ScheduleCreateRequire scheduleCreateRequire, @AuthenticationPrincipal CustomUserDetails loginUser){
         Long userId = loginUser.getUserId();
-        scheduleCreateRequire.setScheduleDate(LocalDate.now());
         scheduleCommandService.registSchedule(scheduleCreateRequire, userId);
         return new ResponseEntity<>("등록 완료", HttpStatus.OK);
     }
