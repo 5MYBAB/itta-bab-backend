@@ -35,7 +35,7 @@ public class GroupInfoCommandService {
         return groupInfoQueryService.findGroupByGroupId(groupId);
     }
 
-    public GroupInfoDto findCurrentGroup(){
+    public GroupInfoDto findCurrentGroup() {
         return groupInfoQueryService.findCurrentGroup();
     }
 
@@ -71,6 +71,7 @@ public class GroupInfoCommandService {
         return groupInfoQueryService.findGroupUserByGroupId(groupId);
     }
 
+    @Transactional
     /* 모임에 신규 사용자 가입 메소드 */
     public void registGroupUser(Long userId, Long groupId) {
         GroupUserDto newGroupUser = new GroupUserDto(null, userId, groupId);

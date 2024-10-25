@@ -36,7 +36,7 @@ public class GroupInfoQueryController {
             description = "관리자는 course_id 상관없이 모두 조회합니다."
     )
     @GetMapping("/admin/list")
-    public ResponseEntity<List<GroupInfoDto>> allGroup(){
+    public ResponseEntity<List<GroupInfoDto>> allGroup() {
         List<GroupInfoDto> groupList = groupInfoQueryService.findAllGroup();
 
         return new ResponseEntity<>(groupList, HttpStatus.OK);
@@ -71,6 +71,16 @@ public class GroupInfoQueryController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(groupList);
+    }
+
+    /* 참여중인 모임 조회 */
+    @GetMapping("/attend")
+    public ResponseEntity<List<GroupInfoDto>> attendGroup(
+            @AuthenticationPrincipal CustomUserDetails loginUser) {
+        System.out.println("loginUser.getCourseId() = " + loginUser.getCourseId());
+        List<GroupInfoDto> foundGroup = groupInfoQueryService.findGroupByUserId(loginUser.getUserId(), loginUser.getCourseId());
+
+        return ResponseEntity.ok(foundGroup);
     }
 
     /* 모임 상세 조회 */
