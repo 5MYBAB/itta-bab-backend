@@ -71,6 +71,7 @@
         FROM post
         WHERE user_id = #{userId}
         ORDER BY create_date DESC
+    </select>
       
     <!-- 게사글 상세 조회-->
     <select id="selectPostByPostId" resultMap="PostQueryResultMap">

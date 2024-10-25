@@ -52,6 +52,7 @@
              , create_date
         FROM post_comment
         WHERE user_id = #{userId}
+    </select>
       
     <!-- 게시물 별 댓글-->
     <select id="selectCommentByPostId" resultMap="PostCommentListResultMap">
