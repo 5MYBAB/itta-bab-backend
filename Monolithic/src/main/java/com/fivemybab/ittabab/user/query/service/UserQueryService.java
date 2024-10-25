@@ -25,11 +25,11 @@ public class UserQueryService {
         return userMapper.findAll();
     }
 
-    public Optional<UserInfo> findUserIdByLoginId(Authentication loginUserLoginId) {
-        return userMapper.findByLoginId(loginUserLoginId.getName());
-    }
-
     public MyPageResponse findMyPageInfoById(Long id) {
         return userMapper.findMyPageInfoById(id);
+    }
+
+    public boolean checkDuplicateLoginId(String loginId) {
+        return userMapper.findByLoginId(loginId).isPresent();
     }
 }

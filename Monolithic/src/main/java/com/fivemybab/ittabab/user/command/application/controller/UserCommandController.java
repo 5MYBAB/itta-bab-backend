@@ -1,5 +1,6 @@
 package com.fivemybab.ittabab.user.command.application.controller;
 
+import com.fivemybab.ittabab.user.command.application.dto.AuthCodeRequestDto;
 import com.fivemybab.ittabab.user.command.application.dto.CreateUserRequest;
 import com.fivemybab.ittabab.user.command.application.dto.MailRequestDto;
 import com.fivemybab.ittabab.user.command.application.dto.UpdateUserRequest;
@@ -23,11 +24,21 @@ public class UserCommandController {
 
     /* 이메일 인증 */
     @Operation(summary = "이메일 인증")
-    @PostMapping("/signup-request")
-    public ResponseEntity<String> signupRequest(@RequestBody MailRequestDto mailRequestDto) {
+    @PostMapping("/email-request")
+    public ResponseEntity<String> emailRequest(@RequestBody MailRequestDto mailRequestDto) {
 
         userCommandService.sendCodeToEmail(mailRequestDto);
         return ResponseEntity.ok().body("이메일 인증코드를 전송하였습니다. 메일을 확인해주세요.");
+    }
+
+    @Operation(summary = "이메일 인증 확인")
+    @PostMapping("/email-check")
+    public ResponseEntity<String> emailCheck(@RequestBody AuthCodeRequestDto authCodeRequestDto) {
+        if (userCommandService.checkAuthCode(authCodeRequestDto)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     /* 회원 가입 기능 */

@@ -6,6 +6,7 @@ import com.fivemybab.ittabab.config.redis.MailService;
 import com.fivemybab.ittabab.config.redis.RedisService;
 import com.fivemybab.ittabab.exception.NotFoundException;
 import com.fivemybab.ittabab.exception.ServerInternalException;
+import com.fivemybab.ittabab.user.command.application.dto.AuthCodeRequestDto;
 import com.fivemybab.ittabab.user.command.application.dto.CreateUserRequest;
 import com.fivemybab.ittabab.user.command.application.dto.MailRequestDto;
 import com.fivemybab.ittabab.user.command.application.dto.UpdateUserRequest;
@@ -93,9 +94,6 @@ public class UserCommandService {
         // 현재 위치가 해당 부캠에서 0.5km 안에 있는지 검증
         currentLocationVerification(targetLatitude, targetLongitude);
 
-        // 이메일 인증 검증
-        EmailVerification(newUser.getEmail(), newUser.getAuthCode());
-
         user.encryptPwd(passwordEncoder.encode(newUser.getPwd()));
         userRepository.save(user);
     }
@@ -153,7 +151,12 @@ public class UserCommandService {
         }
     }
 
-    private void EmailVerification(String email, String authCode) {
+
+    public boolean checkAuthCode(AuthCodeRequestDto authCodeRequestDto) {
+        return EmailVerification(authCodeRequestDto.getEmail(), authCodeRequestDto.getAuthCode());
+    }
+
+    private boolean EmailVerification(String email, String authCode) {
 
         sameUserInDBByEmail(email);
 
@@ -161,9 +164,10 @@ public class UserCommandService {
         String redisAuthCode = redisService.getValues(key);
 
         if (!(redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode))) {
-            throw new IllegalArgumentException("인증번호가 틀렸습니다. 다시 입력해주세요.");
+            return false;   // 인증번호 틀림
         } else {
             redisService.deleteValues(key);
+            return true;   // 인증번호 맞음
         }
     }
 
