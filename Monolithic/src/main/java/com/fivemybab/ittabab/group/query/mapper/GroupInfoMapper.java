@@ -27,4 +27,6 @@ public interface GroupInfoMapper {
     GroupInfoDto findCurrentGroup();
 
     List<GroupInfoDto> findAllGroup();
+
+    List<GroupInfoDto> findGroupByUserId(Long userId, Long courseId);
 }

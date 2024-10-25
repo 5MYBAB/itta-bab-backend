@@ -7,7 +7,6 @@ import com.fivemybab.ittabab.group.query.dto.GroupInfoDto;
 import com.fivemybab.ittabab.group.query.dto.RequestChatDto;
 import com.fivemybab.ittabab.group.query.service.GroupInfoQueryService;
 import com.fivemybab.ittabab.security.util.CustomUserDetails;
-import com.fivemybab.ittabab.user.command.application.dto.UserDto;
 import com.fivemybab.ittabab.user.command.domain.aggregate.UserRole;
 import com.fivemybab.ittabab.user.query.service.UserQueryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/group")
@@ -67,48 +65,39 @@ public class GroupInfoCommandController {
             summary = "모임 참여",
             description = "모임에 참여합니다. \n해당 모임에 가입되지 않은 상태여야 합니다."
     )
-    @GetMapping("/detail/{groupId}")
+    @PostMapping("/detail/{groupId}")
     public ResponseEntity<String> registGroupUser(
             @PathVariable Long groupId,
             @AuthenticationPrincipal CustomUserDetails loginUser
     ) {
-        /* 처리과정
-         * 1. 모임이 존재하는 확인
-         * 2. 이미 가입되어 있는지 확인
-         * 3. 가입하면 모집 인원 이하가 되는지 확인 */
+        try {
+            // 1. 모임이 존재하는 확인
+            GroupInfoDto foundGroupInfo = groupService.findGroupByGroupId(groupId);
+            if (foundGroupInfo == null) {
+                return new ResponseEntity<>("그런 모임은 없습니다.", HttpStatus.NOT_FOUND);
+            }
 
-        // 1
-        GroupInfoDto foundGroupInfo = groupService.findGroupByGroupId(groupId);
-
-        System.out.println("foundGroupInfo = " + foundGroupInfo);
-
-        if (foundGroupInfo == null) {
-            // 모임이 존재하지 않는 경우
-            return new ResponseEntity<>("그런 모임은 없습니다.", HttpStatus.OK);
-        } else {
-            // 모임이 존재하는 경우
-
-            // 모임에 가입한 인원들
+            // 2. 이미 가입되어 있는지 확인
             List<Long> groupUserList = groupService.findGroupUserByGroupId(groupId);
-            System.out.println("groupUserList = " + groupUserList);
-            // 2
             for (Long userId : groupUserList) {
-                System.out.println("userId = " + userId);
-                if (userId == loginUser.getUserId()) {
-                    return new ResponseEntity<>("이미 가입하셨습니다.", HttpStatus.OK);
+                if (userId.equals(loginUser.getUserId())) {
+                    return new ResponseEntity<>("이미 가입하셨습니다.", HttpStatus.ALREADY_REPORTED);
                 }
             }
 
-            // 3
+            // 3. 가입하면 모집 인원 이하가 되는지 확인
             if (groupUserList.size() + 1 <= foundGroupInfo.getUserCounting()) {
                 // insert
-                groupService.registGroupUser(modelMapper.map(loginUser.getUserId(), UserDto.class).getUserId(), foundGroupInfo.getGroupId());
+                groupService.registGroupUser(loginUser.getUserId(), foundGroupInfo.getGroupId());
+                return new ResponseEntity<>("참여가 완료되었습니다.", HttpStatus.OK);
             } else {
-                return null;
+                return new ResponseEntity<>("모집 인원이 초과했습니다.", HttpStatus.LOCKED);
             }
-        }
 
-        return null;
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그 출력
+            return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /* 모임 채팅 생성 */

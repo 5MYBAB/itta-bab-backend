@@ -49,4 +49,9 @@ public class GroupInfoQueryService {
     public List<GroupInfoDto> findAllGroup() {
         return groupInfoMapper.findAllGroup();
     }
+
+    /* 로그인 Id로 사용자가 참여중인 모임 반환 메소드 */
+    public List<GroupInfoDto> findGroupByUserId(Long userId, Long courseId) {
+        return groupInfoMapper.findGroupByUserId(userId, courseId);
+    }
 }
