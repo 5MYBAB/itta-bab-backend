@@ -11,4 +11,6 @@ public interface InquiryMapper {
     List<InquiryDto> userInquiryList(@Param("inquiryId") Long inquiryId);
 
     List<InquiryDto> adminInquiryList();
+
+    InquiryDto inquiryIdList(@Param("inquiryId") Long inquiryId);
 }

@@ -16,5 +16,4 @@ public class InquiryDto {
     private LocalDateTime inquiryReplyTime;
     private Long responseUserId;
     private Long inquiryUserId;
-
 }
