@@ -73,4 +73,20 @@
          WHERE user_id = #{id}
     </select>
 
+    <select id="findIdByNameAndPhone"
+            resultType="string">
+        SELECT login_id
+          FROM user_info
+         WHERE username = #{username}
+           AND phone = #{phone}
+    </select>
+
+    <select id="findPwd"
+            resultType="long">
+        SELECT user_id
+         FROM user_info
+         WHERE username = #{username}
+          AND login_id = #{loginId}
+          AND email = #{email}
+    </select>
 </mapper>

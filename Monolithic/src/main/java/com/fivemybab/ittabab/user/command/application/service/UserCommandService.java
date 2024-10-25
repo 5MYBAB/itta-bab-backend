@@ -16,6 +16,7 @@ import com.fivemybab.ittabab.user.command.domain.aggregate.UserInfo;
 import com.fivemybab.ittabab.user.command.domain.repository.BootCampRepository;
 import com.fivemybab.ittabab.user.command.domain.repository.CourseRepository;
 import com.fivemybab.ittabab.user.command.domain.repository.UserRepository;
+import com.fivemybab.ittabab.user.query.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -36,7 +37,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -51,6 +53,7 @@ public class UserCommandService {
     private final MailService mailService;
     private final RedisService redisService;
     private final ObjectMapper objectMapper;
+    private final UserMapper userMapper;
 
     private String AUTH_CODE_PREFIX = "AuthCode_";
     @Value("${spring.mail.auth-code-expiration-millis}")
@@ -69,6 +72,11 @@ public class UserCommandService {
     private String geocodingUrl;
 
     private final double allowedDistance = 1; // 허용 가능한 거리 (킬로미터 단위)
+
+    private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
+    private static final String DIGITS = "0123456789";
+    private static final String ALL_CHARACTERS = LOWER + DIGITS;
+    private static final int PASSWORD_LENGTH = 12;
 
     @Transactional
     public void createUser(CreateUserRequest newUser) {
@@ -118,7 +126,7 @@ public class UserCommandService {
         // email 중복검사
         sameUserInDBByEmail(email);
 
-        String title = "회원가입 이메일 인증 번호";
+        String title = "[itta-bab] 회원가입 이메일 인증 번호";
         String authCode = createCode();
         mailService.sendEmail(email, title, authCode);
         // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
@@ -284,4 +292,45 @@ public class UserCommandService {
             throw new ServerInternalException("geocoding 중 에러 발생");
         }
     }
+
+    @Transactional
+    public void findPwdAndRandomPwd(String username, String loginId, String email) {
+
+        Long userId = userMapper.findPwd(username, loginId, email)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저를 찾을 수 없습니다."));
+
+        String title = "[itta-bab] 비밀번호가 재설정되었습니다.";
+        String password = generateTemporaryPassword();
+
+        UserInfo foundUser = userRepository.findByUserId(userId);
+        foundUser.modifyPwd(passwordEncoder.encode(password));
+
+        mailService.sendEmail(email, title, password);
+
+    }
+
+    public static String generateTemporaryPassword() {
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
+
+        password.append(LOWER.charAt(random.nextInt(LOWER.length())));
+        password.append(DIGITS.charAt(random.nextInt(DIGITS.length())));
+
+        // 나머지 길이를 랜덤하게 채우기
+        for (int i = 2; i < PASSWORD_LENGTH; i++) {
+            password.append(ALL_CHARACTERS.charAt(random.nextInt(ALL_CHARACTERS.length())));
+        }
+
+        // 패스워드 문자열 섞기
+        return shuffleString(password.toString());
+    }
+
+    private static String shuffleString(String input) {
+        List<Character> characters = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+        Collections.shuffle(characters);
+        StringBuilder shuffled = new StringBuilder();
+        characters.forEach(shuffled::append);
+        return shuffled.toString();
+    }
+
 }

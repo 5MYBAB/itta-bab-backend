@@ -1,11 +1,9 @@
 package com.fivemybab.ittabab.user.query.service;
 
 import com.fivemybab.ittabab.user.command.application.dto.UserDto;
-import com.fivemybab.ittabab.user.command.domain.aggregate.UserInfo;
 import com.fivemybab.ittabab.user.query.dto.MyPageResponse;
 import com.fivemybab.ittabab.user.query.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +29,11 @@ public class UserQueryService {
 
     public boolean checkDuplicateLoginId(String loginId) {
         return userMapper.findByLoginId(loginId).isPresent();
+    }
+
+    public String findIdByNameAndPhone(String username, String phone) {
+
+        Optional<String> result = userMapper.findIdByNameAndPhone(username, phone);
+        return result.orElse(null);
     }
 }

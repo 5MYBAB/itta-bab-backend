@@ -41,6 +41,15 @@ public class UserCommandController {
         }
     }
 
+    @Operation(summary = "비밀번호 찾기")
+    @GetMapping("/find-pwd")
+    public ResponseEntity<String> findPwdAndRandomPwd(@RequestParam String username, @RequestParam String loginId, @RequestParam String email) {
+
+        userCommandService.findPwdAndRandomPwd(username, loginId, email);
+
+        return ResponseEntity.ok().body("이메일 인증코드를 전송하였습니다. 메일을 확인해주세요.");
+    }
+
     /* 회원 가입 기능 */
     @Operation(summary = "회원 가입")
     @PostMapping("/signup")
