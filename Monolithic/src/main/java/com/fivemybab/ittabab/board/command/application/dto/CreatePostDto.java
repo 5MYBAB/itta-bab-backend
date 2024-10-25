@@ -15,6 +15,5 @@ public class CreatePostDto {
     private String postTitle;
     private String postContent;
     private LocalDateTime createDate;
-
-
+    private Long UserId;
 }
