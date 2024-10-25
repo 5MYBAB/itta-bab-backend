@@ -10,10 +10,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -29,7 +26,17 @@ public class InquiryQueryController {
     @GetMapping("/admin")
     public ResponseEntity<List<InquiryDto>> findInquiryList() throws NotFoundException {
         List<InquiryDto> inquiryList = inquiryQueryService.findInquiryList();
+        System.out.println("왔다감");
+        System.out.println(inquiryList.get(0));
         return new ResponseEntity<>(inquiryList, HttpStatus.OK);
+    }
+
+    /* 문의 상세*/
+    @Operation(summary = "문의 상세(관리자)")
+    @GetMapping("/admin/{inquiryId}")
+    public ResponseEntity<InquiryDto> findInquiryById (@PathVariable Long inquiryId){
+        InquiryDto inquiryDto = inquiryQueryService.findInquiryListById(inquiryId);
+        return new ResponseEntity<>(inquiryDto, HttpStatus.OK);
     }
 
     /* 문의 조회 (사용자)*/

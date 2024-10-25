@@ -48,4 +48,8 @@ public class InquiryQueryService {
         return inquiryList;
     }
 
+    @Transactional(readOnly = true)
+    public InquiryDto findInquiryListById(Long inquiryId) {
+        return inquiryMapper.inquiryIdList(inquiryId);
+    }
 }

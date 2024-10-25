@@ -23,4 +23,12 @@
         FROM inquiry
         where inquiry_user_id = #{inquiryId}
     </select>
+
+    <select id="inquiryIdList"
+            parameterType="long"
+            resultMap="InquiryResultMap">
+        SELECT *
+        FROM inquiry
+        where inquiry_id = #{inquiryId}
+    </select>
 </mapper>
