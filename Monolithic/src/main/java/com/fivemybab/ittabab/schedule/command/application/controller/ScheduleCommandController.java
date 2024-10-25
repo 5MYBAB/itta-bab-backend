@@ -41,7 +41,6 @@ public class ScheduleCommandController {
         if(!userId.equals(scheduleDtoUserId)){
             return new ResponseEntity<>("작성자가 아닙니다.", HttpStatus.OK);
         }
-        scheduleModifyRequest.setScheduleDate(LocalDate.now());
         scheduleCommandService.modifySchedule(scheduleId, scheduleModifyRequest);
         return new ResponseEntity<>("수정 완료"+scheduleModifyRequest, HttpStatus.OK);
     }
