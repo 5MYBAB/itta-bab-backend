@@ -34,15 +34,15 @@ public class ScheduleCommandController {
 
     /* 일정 수정 */
     @Operation(summary = "일정 수정")
-    @PutMapping
-    public ResponseEntity<String> modifySchedule(@RequestBody ScheduleModifyRequest scheduleModifyRequest, @AuthenticationPrincipal CustomUserDetails loginUser){
+    @PutMapping("/{scheduleId}")
+    public ResponseEntity<String> modifySchedule(@PathVariable("scheduleId") Long scheduleId,@RequestBody ScheduleModifyRequest scheduleModifyRequest, @AuthenticationPrincipal CustomUserDetails loginUser){
         Long userId = loginUser.getUserId();
-        Long scheduleDtoUserId = scheduleCommandService.getScheduleByUserId(scheduleModifyRequest.getScheduleId());
+        Long scheduleDtoUserId = scheduleCommandService.getScheduleByUserId(scheduleId);
         if(!userId.equals(scheduleDtoUserId)){
             return new ResponseEntity<>("작성자가 아닙니다.", HttpStatus.OK);
         }
         scheduleModifyRequest.setScheduleDate(LocalDate.now());
-        scheduleCommandService.modifySchedule(scheduleModifyRequest);
+        scheduleCommandService.modifySchedule(scheduleId, scheduleModifyRequest);
         return new ResponseEntity<>("수정 완료"+scheduleModifyRequest, HttpStatus.OK);
     }
 

@@ -61,7 +61,7 @@ class ScheduleServiceTest {
         updateDto.setScheduleTitle("수정된 일정 제목 입니다.");
         updateDto.setScheduleContent("수정된 일정 내용 입니다.");
 
-        scheduleCommandService.modifySchedule(updateDto);
+        scheduleCommandService.modifySchedule(1L,updateDto);
 
         ScheduleInfo updatedSchedule = scheduleRepository.findById(savedSchedule.getScheduleId())
                 .orElseThrow(() -> new NoSuchElementException("일정을 찾을 수 없습니다."));
