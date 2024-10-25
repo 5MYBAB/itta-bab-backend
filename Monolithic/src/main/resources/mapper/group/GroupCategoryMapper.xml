@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivemybab.ittabab.group.query.mapper.GroupCategoryMapper">
+    <select id="findGroupCategory"
+            resultType="com.fivemybab.ittabab.group.query.dto.GroupCategoryDto">
+        SELECT *
+        FROM group_category
+        ORDER BY group_category_id ASC
+    </select>
+</mapper>
