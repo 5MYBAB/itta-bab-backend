@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface ReportMapper {
     List<ReportDto> adminReportList();
+
+    List<ReportDto> userReportList(Long userId);
 }
