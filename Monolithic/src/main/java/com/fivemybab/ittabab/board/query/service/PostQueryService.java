@@ -1,5 +1,6 @@
 package com.fivemybab.ittabab.board.query.service;
 
+import com.fivemybab.ittabab.board.query.dto.PostCommentResponse;
 import com.fivemybab.ittabab.board.query.dto.PostQueryDto;
 import com.fivemybab.ittabab.board.query.mapper.PostQueryMapper;
 import com.fivemybab.ittabab.security.util.CustomUserDetails;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -60,5 +62,13 @@ public class PostQueryService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
+    public PostQueryDto findPostsByPostId(Long postId) throws NotFoundException {
+        PostQueryDto postDetail = postQueryMapper.selectPostByPostId(postId);
 
+        if (postDetail==null) {
+            throw new NotFoundException("해당 글이 없습니다.");
+        }
+        return postDetail;
+    }
 }
