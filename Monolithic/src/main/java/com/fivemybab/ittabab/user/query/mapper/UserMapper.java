@@ -20,4 +20,6 @@ public interface UserMapper {
     MyPageResponse findMyPageInfoById(Long id);
 
     Optional<String> findIdByNameAndPhone(String username, String phone);
+
+    Optional<Long> findPwd(String username, String loginId, String email);
 }

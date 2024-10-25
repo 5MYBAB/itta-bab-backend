@@ -80,4 +80,13 @@
          WHERE username = #{username}
            AND phone = #{phone}
     </select>
+
+    <select id="findPwd"
+            resultType="long">
+        SELECT user_id
+         FROM user_info
+         WHERE username = #{username}
+          AND login_id = #{loginId}
+          AND email = #{email}
+    </select>
 </mapper>
