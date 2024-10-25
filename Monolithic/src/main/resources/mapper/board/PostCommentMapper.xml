@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fivemybab.ittabab.board.query.mapper.PostCommentQueryMapper">
     <resultMap id="PostCommentResultMap" type="com.fivemybab.ittabab.board.query.dto.PostCommentQueryDto">
@@ -21,5 +21,24 @@
                  LEFT JOIN post_comment pc ON pc.post_id = p.post_id
         GROUP BY p.post_id, p.post_title, p.post_content, u.username, p.create_date
         ORDER BY comment_count DESC
+    </select>
+
+    <resultMap id="MyCommentResultMap" type="com.fivemybab.ittabab.board.query.dto.MyCommentResponse">
+        <result property="postCommentId" column="post_comment_id"/>
+        <result property="postId" column="post_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="commentContent" column="comment_content"/>
+        <result property="createDate" column="create_date"/>
+    </resultMap>
+
+    <select id="findMyCommentList" resultMap="MyCommentResultMap">
+        SELECT
+               post_comment_id
+             , post_id
+             , user_id
+             , comment_content
+             , create_date
+        FROM post_comment
+        WHERE user_id = #{userId}
     </select>
 </mapper>
