@@ -1,5 +1,6 @@
 package com.fivemybab.ittabab.board.query.controller;
 
+import com.fivemybab.ittabab.board.query.dto.MyPostResponse;
 import com.fivemybab.ittabab.board.query.dto.PostQueryDto;
 import com.fivemybab.ittabab.board.query.service.PostQueryService;
 import com.fivemybab.ittabab.security.util.CustomUserDetails;
@@ -41,7 +42,13 @@ public class PostQueryController {
         return postQueryService.findPostsByLikesAsc(loginUser);
     }
 
+    @Operation(summary = "특정 유저가 쓴 게시글 목록 조회", description = "특정 유저가 쓴 게시글을 조회합니다.")
+    @GetMapping("/list")
+    public List<MyPostResponse> findMyPostList(@AuthenticationPrincipal CustomUserDetails loginUser) throws NotFoundException {
 
+        Long userId = loginUser.getUserId();
+        return postQueryService.findMyPostList(userId);
+    }
 
 
 }
