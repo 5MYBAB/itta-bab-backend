@@ -34,7 +34,6 @@ public class UserCommandController {
     @Operation(summary = "이메일 인증 확인")
     @PostMapping("/email-check")
     public ResponseEntity<String> emailCheck(@RequestBody AuthCodeRequestDto authCodeRequestDto) {
-        System.out.println("지나가용");
         if (userCommandService.checkAuthCode(authCodeRequestDto)) {
             return ResponseEntity.ok().build();
         } else {
