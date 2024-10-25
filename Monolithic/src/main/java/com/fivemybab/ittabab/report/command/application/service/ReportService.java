@@ -5,6 +5,9 @@ import com.fivemybab.ittabab.board.command.domain.aggregate.PostComment;
 import com.fivemybab.ittabab.board.command.domain.repository.PostCommentRepository;
 import com.fivemybab.ittabab.board.command.domain.repository.PostRepository;
 import com.fivemybab.ittabab.exception.NotFoundException;
+import com.fivemybab.ittabab.group.command.domain.aggregate.GroupComment;
+import com.fivemybab.ittabab.group.command.domain.aggregate.GroupInfo;
+import com.fivemybab.ittabab.group.command.domain.repository.GroupInfoRepository;
 import com.fivemybab.ittabab.report.command.application.dto.ResolveReportRequest;
 import com.fivemybab.ittabab.report.command.application.dto.ResolveReportResponse;
 import com.fivemybab.ittabab.report.command.domain.aggregate.Target;
@@ -29,6 +32,7 @@ public class ReportService {
     private final PostRepository postRepository;
     private final StoreReviewRepository storeReviewRepository;
     private final PostCommentRepository postCommentRepository;
+    private final GroupInfoRepository groupInfoRepository;
 
 
     // 신고 생성
@@ -92,6 +96,10 @@ public class ReportService {
             PostComment postComment = postCommentRepository.findById(targetId)
                     .orElseThrow(() -> new NotFoundException("해당 댓글을 찾을 수 없습니다."));
             return postComment.getUserId();
+        } else if ("GROUP".equals(reportTarget)) {
+            GroupInfo groupInfo = groupInfoRepository.findById(targetId)
+                    .orElseThrow(() -> new NotFoundException("해당 모임을 찾을 수 없습니다."));
+            return groupInfo.getUserId();
         }
 
         // 다른 타입의 대상은 필요한 경우 추가로 처리
