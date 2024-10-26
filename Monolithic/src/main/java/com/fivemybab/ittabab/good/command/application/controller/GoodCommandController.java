@@ -1,6 +1,6 @@
 package com.fivemybab.ittabab.good.command.application.controller;
 
-import com.fivemybab.ittabab.good.command.application.dto.GoodRequestDto;
+import com.fivemybab.ittabab.good.command.application.dto.GoodDto;
 import com.fivemybab.ittabab.good.command.application.service.GoodCommandService;
 import com.fivemybab.ittabab.security.util.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,19 +18,12 @@ public class GoodCommandController {
 
     private final GoodCommandService goodCommandService;
 
-    /* 좋아요 추가 */
-    @Operation(summary = "좋아요 추가")
+    /* 좋아요 등록 및 취소 */
+    @Operation(summary = "좋아요 등록 및 취소")
     @PostMapping
-    public ResponseEntity<Void> like(@RequestBody GoodRequestDto requestDto, @AuthenticationPrincipal CustomUserDetails loginUser) {
-        goodCommandService.createGood(loginUser.getUserId(), requestDto.getTarget(), requestDto.getTargetId());
-        return ResponseEntity.ok().build();
-    }
-
-    /* 좋아요 삭제 */
-    @Operation(summary = "좋아요 삭제")
-    @DeleteMapping
-    public ResponseEntity<Void> unlike(@RequestBody GoodRequestDto requestDto, @AuthenticationPrincipal CustomUserDetails loginUser) {
-        goodCommandService.deleteGood(loginUser.getUserId(), requestDto.getTarget(), requestDto.getTargetId());
+    public ResponseEntity<Void> toggleLike(@RequestBody GoodDto goodDTO, @AuthenticationPrincipal CustomUserDetails loginUser) {
+        goodDTO.setUserId(loginUser.getUserId()); // 로그인 사용자 ID 설정
+        goodCommandService.toggleLike(goodDTO);
         return ResponseEntity.ok().build();
     }
 }
