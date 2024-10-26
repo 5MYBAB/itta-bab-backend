@@ -39,7 +39,7 @@ public class StoreReviewQueryController {
     /* 특정 가게 리뷰 전체 조회 */
     @Operation(summary = "특정 가게 리뷰 전체 조회")
     @GetMapping("/review/{storeId}")
-    public ResponseEntity<List<StoreReviewInfoDto>> storeReviewByStoreIdList(Long storeId) {
+    public ResponseEntity<List<StoreReviewInfoDto>> storeReviewByStoreIdList(@PathVariable Long storeId) {
 
         List<StoreReviewInfoDto> storeReviewList = storeReviewQueryService.findStoreReviewByStoreIdList(storeId);
 
