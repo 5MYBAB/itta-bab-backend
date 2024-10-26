@@ -7,10 +7,11 @@ import com.fivemybab.ittabab.user.command.application.service.FriendCommandServi
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Tag(name = "Friend", description = "친구 관련 API")
 @RestController
@@ -59,10 +60,10 @@ public class FriendCommandController {
     /* 친구 삭제 기능 */
     @Operation(summary = "친구 삭제")
     @DeleteMapping
-    public ResponseEntity<String> deleteFriend(@RequestBody Long friendUserId,
+    public ResponseEntity<String> deleteFriend(@RequestBody Map<String, Long> requestBody,
                                                @AuthenticationPrincipal CustomUserDetails loginUser) {
-
         Long userId = loginUser.getUserId();
+        Long friendUserId = requestBody.get("friendUserId");
 
         friendCommandService.deleteFriend(userId, friendUserId);
         return ResponseEntity.ok("친구를 삭제했습니다.");
