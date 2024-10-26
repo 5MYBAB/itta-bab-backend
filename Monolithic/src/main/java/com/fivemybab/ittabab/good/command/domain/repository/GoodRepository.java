@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface GoodRepository extends JpaRepository<Good, Long> {
 
-    Optional<Object> findByUserIdAndTargetAndTargetId(Long userId, Target target, Long targetId);
+    Optional<Good> findByUserIdAndTargetAndTargetId(Long userId, Target target, Long targetId);
+
+    void deleteByUserIdAndTargetAndTargetId(Long userId, Target target, Long targetId);
 }
