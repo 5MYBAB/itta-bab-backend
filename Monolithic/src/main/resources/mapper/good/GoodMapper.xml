@@ -13,4 +13,13 @@
         WHERE target = #{target} AND target_id = #{targetId};
     </select>
 
+    <select id="existsLike" parameterType="com.fivemybab.ittabab.good.query.dto.IsLikedResponse" resultType="boolean">
+        SELECT EXISTS (
+        SELECT 1 FROM good
+        WHERE user_id = #{userId}
+        AND target = #{target}
+        AND target_id = #{targetId}
+        )
+    </select>
+
 </mapper>

@@ -2,6 +2,7 @@ package com.fivemybab.ittabab.good.query.service;
 
 import com.fivemybab.ittabab.good.command.domain.aggregate.Target;
 import com.fivemybab.ittabab.good.query.dto.CountGoodRequest;
+import com.fivemybab.ittabab.good.query.dto.IsLikedResponse;
 import com.fivemybab.ittabab.good.query.mapper.GoodMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,4 +23,8 @@ public class GoodQueryService {
         return goodMapper.countByTargetAndTargetId(request);
     }
 
+    // 좋아요 존재 여부
+    public boolean isLiked(IsLikedResponse isLikedResponse) {
+        return goodMapper.existsLike(isLikedResponse.getUserId(), isLikedResponse.getTarget(), isLikedResponse.getTargetId());
+    }
 }

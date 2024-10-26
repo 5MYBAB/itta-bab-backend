@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class GoodRequestDto {
+public class GoodDto {
+    private Long userId;
     private Target target;
     private Long targetId;
 }
