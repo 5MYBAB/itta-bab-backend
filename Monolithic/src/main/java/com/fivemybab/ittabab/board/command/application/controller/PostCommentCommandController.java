@@ -2,6 +2,7 @@ package com.fivemybab.ittabab.board.command.application.controller;
 
 
 import com.fivemybab.ittabab.board.command.application.dto.CreatePostCommentDto;
+import com.fivemybab.ittabab.board.command.application.dto.PostCommentResponseDto;
 import com.fivemybab.ittabab.board.command.application.dto.UpdatePostCommentDto;
 import com.fivemybab.ittabab.board.command.application.service.PostCommentCommandService;
 import com.fivemybab.ittabab.board.command.domain.aggregate.PostComment;
@@ -26,9 +27,19 @@ public class PostCommentCommandController {
     // 댓글 생성
     @Operation(summary = "댓글 등록")
     @PostMapping
-    public ResponseEntity<Void> createPostComment(@RequestBody CreatePostCommentDto createPostCommentDto, @AuthenticationPrincipal CustomUserDetails loginUser) {
-        postCommentCommandService.createPostComment(createPostCommentDto, loginUser.getUserId());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<PostCommentResponseDto> createPostComment(@RequestBody CreatePostCommentDto createPostCommentDto,
+                                                                    @AuthenticationPrincipal CustomUserDetails loginUser) {
+        PostCommentResponseDto responseDto = postCommentCommandService.createPostComment(createPostCommentDto, loginUser.getUserId());
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    // 대댓글 등록
+    @Operation(summary = "대댓글 등록")
+    @PostMapping("/replies") // 대댓글 등록을 위한 새로운 엔드포인트
+    public ResponseEntity<PostCommentResponseDto> createReply(@RequestBody CreatePostCommentDto createPostCommentDto,
+                                                              @AuthenticationPrincipal CustomUserDetails loginUser) {
+        PostCommentResponseDto responseDto = postCommentCommandService.createPostComment(createPostCommentDto, loginUser.getUserId());
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     // 댓글 수정

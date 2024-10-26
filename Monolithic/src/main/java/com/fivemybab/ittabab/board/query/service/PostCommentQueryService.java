@@ -1,6 +1,5 @@
 package com.fivemybab.ittabab.board.query.service;
 
-import com.fivemybab.ittabab.board.query.dto.MyCommentResponse;
 import com.fivemybab.ittabab.board.query.dto.PostCommentQueryDto;
 import com.fivemybab.ittabab.board.query.dto.PostCommentResponse;
 import com.fivemybab.ittabab.board.query.mapper.PostCommentQueryMapper;
@@ -29,17 +28,6 @@ public class PostCommentQueryService {
         return posts;
     }
 
-    public List<MyCommentResponse> findMyCommentList(Long userId) throws NotFoundException {
-
-        List<MyCommentResponse> comments = postCommentQueryMapper.findMyCommentList(userId);
-
-        if (comments.isEmpty()) {
-            throw new NotFoundException("게시물이 없습니다.");
-        }
-
-        return comments;
-    }
-  
     /* 해당 게시물 별 댓글 리스트 */
     @Transactional(readOnly = true)
     public List<PostCommentResponse> findCommentByPostId(Long postId) throws NotFoundException {
