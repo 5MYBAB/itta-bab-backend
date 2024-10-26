@@ -111,7 +111,6 @@ public class UserCommandService {
 
         UserInfo foundUser = userRepository.findByUserId(userNo);
         foundUser.modifyPwd(passwordEncoder.encode(updateUserRequest.getPwd()));
-        foundUser.modifyPhone(updateUserRequest.getPhone());
     }
 
     @Transactional

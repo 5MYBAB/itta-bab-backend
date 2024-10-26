@@ -40,8 +40,4 @@ public class UserInfo {
     public void modifyPwd(String pwd) {
         this.pwd = pwd;
     }
-
-    public void modifyPhone(String phone) {
-        this.phone = phone;
-    }
 }

@@ -1,5 +1,6 @@
 package com.fivemybab.ittabab.user.command.application.controller;
 
+import com.fivemybab.ittabab.security.util.CustomUserDetails;
 import com.fivemybab.ittabab.user.command.application.dto.AuthCodeRequestDto;
 import com.fivemybab.ittabab.user.command.application.dto.CreateUserRequest;
 import com.fivemybab.ittabab.user.command.application.dto.MailRequestDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "User", description = "회원 관련 API")
@@ -62,10 +64,11 @@ public class UserCommandController {
 
     /* 회원 정보 수정 기능*/
     @Operation(summary = "회원 정보 수정")
-    @PutMapping("/mypage/{userNo}")
-    public ResponseEntity<String> modifyUser(@PathVariable Long userNo, @RequestBody UpdateUserRequest updateUserRequest) {
+    @PutMapping("/mypage")
+    public ResponseEntity<String> modifyUser(@AuthenticationPrincipal CustomUserDetails loginUser, @RequestBody UpdateUserRequest updateUserRequest) {
 
-        userCommandService.modifyUser(userNo, updateUserRequest);
+        Long userId = loginUser.getUserId();
+        userCommandService.modifyUser(userId, updateUserRequest);
 
         return ResponseEntity.ok().body("회원 정보 수정 완료");
     }
