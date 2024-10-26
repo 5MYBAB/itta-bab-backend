@@ -31,11 +31,12 @@ public class PostComment {
 
     // @Builder 어노테이션과 함께 필요한 생성자 추가
     @Builder
-    protected PostComment(Long postId, Long parentCommentId, Long userId, String commentContent, boolean isBlinded) {
+    protected PostComment(Long postId, Long parentCommentId, Long userId, String commentContent, LocalDateTime createDate, boolean isBlinded) {
         this.postId = postId;
         this.parentCommentId = parentCommentId;
         this.userId = userId;
         this.commentContent = commentContent;
+        this.createDate = createDate;
         this.isBlinded = isBlinded;
     }
 

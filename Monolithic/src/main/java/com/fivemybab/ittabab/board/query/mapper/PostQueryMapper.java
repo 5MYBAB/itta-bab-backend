@@ -1,6 +1,5 @@
 package com.fivemybab.ittabab.board.query.mapper;
 
-import com.fivemybab.ittabab.board.query.dto.MyPostResponse;
 import com.fivemybab.ittabab.board.query.dto.PostQueryDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,8 +17,5 @@ public interface PostQueryMapper {
     // 좋아요가 가장 적은 게시물 목록 조회
     List<PostQueryDto> selectPostsByLikesAsc(Long courseId);
 
-    List<MyPostResponse> findMyPostList(Long userId);
-  
     PostQueryDto selectPostByPostId(Long postId);
-
 }

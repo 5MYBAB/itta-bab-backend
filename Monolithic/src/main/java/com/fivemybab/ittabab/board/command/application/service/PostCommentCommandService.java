@@ -1,12 +1,15 @@
 package com.fivemybab.ittabab.board.command.application.service;
 
 import com.fivemybab.ittabab.board.command.application.dto.CreatePostCommentDto;
+import com.fivemybab.ittabab.board.command.application.dto.PostCommentResponseDto;
 import com.fivemybab.ittabab.board.command.application.dto.UpdatePostCommentDto;
 import com.fivemybab.ittabab.board.command.domain.aggregate.PostComment;
 import com.fivemybab.ittabab.board.command.domain.repository.PostCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -16,15 +19,22 @@ public class PostCommentCommandService {
 
     // 댓글 생성 (C)
     @Transactional
-    public void createPostComment(CreatePostCommentDto createPostCommentDto, Long userId) {
+    public PostCommentResponseDto createPostComment(CreatePostCommentDto createPostCommentDto, Long userId) {
+
         PostComment postComment = PostComment.builder()
                 .postId(createPostCommentDto.getPostId())
                 .userId(userId)
-                .commentContent(createPostCommentDto.getCommentContent())
+                .commentContent(createPostCommentDto.getContent())
+                .parentCommentId(createPostCommentDto.getParentCommentId())
+                .createDate(LocalDateTime.now())
                 .isBlinded(false)
                 .build();
 
-        postCommentRepository.save(postComment);
+
+        PostComment savedComment = postCommentRepository.save(postComment);
+
+
+        return new PostCommentResponseDto(savedComment);
     }
 
     // 댓글 수정 (U)
