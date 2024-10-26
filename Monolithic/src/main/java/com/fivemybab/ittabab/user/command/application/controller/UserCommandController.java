@@ -75,10 +75,11 @@ public class UserCommandController {
 
     /* 회원 정보 삭제 */
     @Operation(summary = "회원 정보 삭제")
-    @DeleteMapping("/mypage/{userNo}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userNo) {
+    @DeleteMapping("/mypage")
+    public ResponseEntity<String> deleteUser(@AuthenticationPrincipal CustomUserDetails loginUser) {
 
-        userCommandService.deleteUser(userNo);
+        Long userId = loginUser.getUserId();
+        userCommandService.deleteUser(userId);
 
         return ResponseEntity.ok().body("회원 삭제 완료");
     }
